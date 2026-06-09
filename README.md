@@ -1,5 +1,5 @@
 # VProfile Webapp
-###
+#######
 ## Overview
 
 Visualpathit VProfile is a Java web application built as a WAR package using Spring MVC, Spring Security, Spring Data JPA, Hibernate, RabbitMQ, Elasticsearch, and MySQL.
