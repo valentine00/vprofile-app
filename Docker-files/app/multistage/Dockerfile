@@ -1,4 +1,4 @@
-FROM maven:3.9.9-eclipse-temurin-21-jammy AS BUILD_IMAGE
+FROM maven:3.9.9-eclipse-temurin-21-jammy AS build_image
 RUN git clone https://github.com/hkhcoder/vprofile-project.git
 RUN cd vprofile-project && git checkout docker && mvn install
 
@@ -6,9 +6,16 @@ FROM tomcat:10-jdk21
 
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-COPY --from=BUILD_IMAGE vprofile-project/target/vprofile-v2.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=build_image vprofile-project/target/vprofile-v2.war /usr/local/tomcat/webapps/ROOT.war
 
-ADD https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/1.1.0/jmx_prometheus_javaagent-1.1.0.jar /opt/jmx/jmx_prometheus_javaagent.jar
+# Install curl
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# Create directory and download JMX exporter
+RUN mkdir -p /opt/jmx && \
+    curl -fsSL \
+    https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.20.0/jmx_prometheus_javaagent-0.20.0.jar \
+    -o /opt/jmx/jmx_prometheus_javaagent.jar
 
 COPY Docker-files/app/multistage/jmx-config.yaml /opt/jmx/jmx-config.yaml
 
