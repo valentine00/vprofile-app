@@ -98,6 +98,30 @@ The repository contains Docker-related files under `Docker-files/` for applicati
 
 Review the Dockerfiles and related environment definitions before building containers.
 
+- The multistage app image is defined in `Docker-files/app/multistage/Dockerfile`.
+- This Dockerfile installs the Prometheus JMX exporter and exposes port `9404` for metric scraping.
+- The exporter configuration is provided by `Docker-files/app/multistage/jmx-config.yaml`.
+
+### Build and run the app image
+
+From the project root:
+
+```bash
+docker build -f Docker-files/app/multistage/Dockerfile -t vprofile-app .
+```
+
+Run the container with both application and metrics ports exposed:
+
+```bash
+docker run -p 8080:8080 -p 9404:9404 vprofile-app
+```
+
+Prometheus can scrape metrics at:
+
+```text
+http://localhost:9404/
+```
+
 ## Useful Files
 
 - `src/main/webapp/WEB-INF/web.xml` – web application configuration
