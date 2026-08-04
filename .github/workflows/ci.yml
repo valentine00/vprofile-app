@@ -15,7 +15,7 @@ env:
   SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
 
 jobs:
-  build-and-sonar:
+  build:
     if: github.event_name == 'pull_request'
     name: Build, Test, Checkstyle & SonarQube
     runs-on: ubuntu-latest
