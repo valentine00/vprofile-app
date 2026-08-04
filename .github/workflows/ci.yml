@@ -39,31 +39,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      #- name: Cache Sonar scanner cache
-      #  uses: actions/cache@v4
-       # with:
-        #  path: ~/.sonar/cache
-         # key: ${{ runner.os }}-sonar-${{ hashFiles('sonar-project.properties') }}
-          #restore-keys: |
-           # ${{ runner.os }}-sonar-
-
-      #- name: Build, run unit tests, and generate Checkstyle report
-       # run: mvn clean verify checkstyle:checkstyle -B
-
-      #- name: Run SonarQube scan
-       # uses: sonarsource/sonarqube-scan-action@v2
-        #env:
-         # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          #SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
-
-      #- name: SonarQube quality gate check
-       # uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
-        #env:
-         # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          #SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
-        #with:
-         # pollingTimeoutSec: 600
-
+     
   docker-build-push:
     if: github.event_name == 'push'
     name: Build Docker image and push to ECR
