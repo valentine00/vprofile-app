@@ -17,7 +17,7 @@ env:
 jobs:
   build:
     if: github.event_name == 'pull_request'
-    name: Build, Test, Checkstyle & SonarQube
+    name: Build and test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
